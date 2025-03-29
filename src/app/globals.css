@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --bg: #2A5C54;
+  --text: #F5F5F5 ;
+  --hover:#87CEEB ;
+  --border: #8A9B6E;
+  --btn: #CC7357 ;
+  --btnh: #FF6F61 ;
+  --secbtn: #8A9B6E ;
+  --secbtnh: #6D6D6D ;
+}
+
+input{
+  @apply w-[400px] border border-gray-200 py-2 px-6 bg-zinc-100/40;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #F5F5F5;
+}

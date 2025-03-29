@@ -1,0 +1,122 @@
+.container{
+    background-color: var(--bg);
+    position: fixed;
+    z-index: 1000;
+    width: 100vw;
+    width: 100dvw;
+    display: flex;
+    justify-content: space-between;
+    padding: 9px min(10px, 10%);
+    align-items: center;
+    height: 4rem;
+}
+
+.right{
+    display: flex;
+    gap: 10px;
+    color: white;
+    align-items: center;
+    font-weight: 700;
+}
+
+.left{
+    color: var(--text);
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 700;
+}
+
+.links{
+    padding: 8px 13px;
+    /* background-color: #45062B; */
+    border-radius: 13px;
+    transition: transform 0.5s ease-in-out ;
+}
+
+.links:hover{
+    text-decoration: underline;
+    color: #FF1493;
+
+}
+
+.active{
+    background: var(--btn);
+    color: var(--text);
+
+}
+
+.book{
+    background-color: var(--secbtn);
+    padding: 1rem;
+    border-radius: 1rem;
+    transition: transform 0.5s ease-in-out;
+}
+
+.book:hover{
+    background-color: var(--hover);
+}
+
+.sidecontainer{
+    display: none;
+    flex-direction: column;
+}
+
+.sideNav{
+    background-color: #1b0136;
+    position: fixed;
+    z-index: 1000;
+    width: 100vw;
+    width: 100dvw;
+    display: flex;
+    padding: 5px min(10px, 10%);
+    align-items: center;
+    height: 4rem;
+    overflow: none;
+}
+
+.sideHead{
+    width: 100vw;
+    width: 100dvw;
+    justify-content: space-between;
+    display: flex;
+}
+
+.menu{
+    background-color: #8c18a7;
+    color: white;
+    padding: 10px;
+    font-weight: 900;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 100%;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.overlay{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: white;
+    align-items: center;
+    font-weight: 700;
+    width: 100%;
+    position: absolute;
+    z-index: 1000;
+    top: 15;
+    background: blue;
+}
+
+@media(max-width: 412px){
+    .container{
+        display: none;
+    }
+
+    .sidecontainer{
+        display: flex;
+    }
+}
