@@ -35,7 +35,7 @@
 
 .links:hover{
     text-decoration: underline;
-    color: #FF1493;
+    color: var(--btn);
 
 }
 

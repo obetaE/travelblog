@@ -14,8 +14,8 @@ const ContactPage = () => {
             fill
           />
         </div>
-        <h1>Get in Touch with Us</h1>
-        <h2>For Further Info & Services</h2>
+        <h1>{`Get in Touch, We're just one Click away`}</h1>
+        <h2>{`What's on Your Mind?`}</h2>
         <div className={styles.center}>
           <form className={styles.form}>
             <div className={styles.top}>
