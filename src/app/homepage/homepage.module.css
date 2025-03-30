@@ -1,0 +1,6 @@
+.container{
+    padding-top: 6rem;
+    overflow: hidden;
+    width: 100%;
+    min-height: 100vh;
+}

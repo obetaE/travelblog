@@ -27,7 +27,7 @@ Combine similar sections under dropdowns. For example:
 
     const navLinks = [
       {
-        path: "/",
+        path: "/homepage",
         title: "Home",
       },
       {
