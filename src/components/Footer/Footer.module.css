@@ -30,50 +30,56 @@
   align-items: center;
 }
 
+.subscribe input{
+  border-radius: 10px;
+}
+
 .button {
   padding: 10px;
-  background-color: var(--button);
+  background-color: var(--btn);
+  border-radius: 10px;
+}
+
+.button:hover{
+  background: var(--btnh);
 }
 
 .bottom {
   width: 100%;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse; /* Remove gaps between table cells */
-  table-layout: fixed; /* Ensure columns have consistent widths */
-}
-
-.thead tr {
-  font-size: 1.2rem;
-  color: #ff1493;
-  text-align: left; /* Align header content to the left */
-}
-
-.tbody tr {
-  font-weight: 700;
-  text-align: left; /* Align all content in table rows to the left */
-}
-
-.tbody tr td {
-  vertical-align: left; /* Align content vertically in the center */
-}
-
-.table th:first-child, .table td:first-child {
-  width: 4%; /* Smallest width for the * column */
-}
-
-.socials {
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* Add spacing between icon and text */
+  gap: 6px;
 }
 
-.socials span {
-  white-space: nowrap; /* Prevent text wrapping */
+.links{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--btn);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
-.links img {
-  border-radius: 50%; /* Optional: Make icons circular */
+.links:hover{
+  background: var(--btnh);
+}
+
+.links:nth-child(3){
+  padding: 5px;
+}
+
+.links:nth-child(4){
+  padding: 7px;
+}
+
+.img:nth-child(1){
+  object-fit: cover;
+}
+
+.follows{
+  font-weight: 700;
+  font-size: 1.5rem;
 }
