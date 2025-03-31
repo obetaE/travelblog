@@ -5,6 +5,7 @@
     margin-bottom: 20px;
     color: white;
     border: 1px solid #ffffff;
+    background: #000;
   }
   
   .top{
@@ -41,6 +42,10 @@
     font-weight: 700;
     padding: 1rem;
   }
+
+  .bottom{
+    padding: 1rem;
+  }
   
   .desc{
     width: 90%;
@@ -50,4 +55,6 @@
   
   .link{
     text-decoration: underline;
+    text-align: center;
+    font-weight: 700;
   }
