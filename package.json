@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "date-fns": "^4.1.0",
     "lucide-react": "^0.485.0",
     "mongoose": "^8.9.5",
+    "motion": "^12.7.2",
     "next": "15.1.4",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",

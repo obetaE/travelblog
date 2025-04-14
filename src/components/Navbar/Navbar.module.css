@@ -111,7 +111,7 @@
     background: blue;
 }
 
-@media(max-width: 412px){
+@media(max-width: 512px){
     .container{
         display: none;
     }

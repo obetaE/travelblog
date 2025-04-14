@@ -1,8 +1,10 @@
-.container{
+.container {
     padding-top: 2rem;
     overflow: hidden;
     width: 100%;
     min-height: 100vh;
+    position: relative;
+    background: var(--border);
 }
 
 .imgcontainer{
@@ -16,7 +18,6 @@
 }
 
 .login{
-    margin-top: 3rem;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -28,12 +29,15 @@
     border-radius: 1rem;
     gap: 10px;
     align-items: center;
+    width: 90%; /* Responsive width */
+    max-width: 500px; /* Maximum form width */
 }
 
 .login h1{
- font-weight: 700;
- font-size: 1.5rem;   
- color: #ffffff;
+    font-weight: 700;
+    font-size: 1.5rem;   
+    color: #ffffff;
+    text-align: center;
 }
 
 .login span{
@@ -41,20 +45,27 @@
     flex-direction: column;
     color: #ffffff;
     font-weight: 700;
+    width: 100%; /* Full width of form */
+    gap: 0.5rem;
 }
 
 .login input{
     border-radius: 10px;
+    padding: 0.8rem;
+    width: 100%; /* Full width */
+    box-sizing: border-box; /* Include padding in width */
 }
 
 .button{
     background: var(--btn);
     padding: 0.8rem 2.5rem;
-    width: fit-content;
+    width: 100%; /* Full width of form */
     border-radius: 12px;
     color: #ffffff;
     font-weight: 700;
+    margin-top: 1rem;
 }
+
 
 .button:hover{
     background: var(--btnh);
@@ -101,3 +112,70 @@
     display: flex;
     gap: 4px;
   }
+
+  @media (max-width: 768px) {
+    .container {
+        padding-top: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .imgcontainer {
+        width: 100%;
+        height: 40vh; /* Adjust image height on mobile */
+    }
+
+    .login {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: 90%;
+        margin: -50px auto 2rem; /* Bring form up over image */
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login {
+        padding: 1.2rem;
+        width: 95%;
+        gap: 8px;
+    }
+
+    .login h1 {
+        font-size: 1.3rem;
+    }
+
+    .login input {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+    }
+
+    .button {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .account {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .login {
+        padding: 1rem;
+    }
+
+    .login h1 {
+        font-size: 1.2rem;
+    }
+
+    .login input {
+        padding: 0.6rem;
+    }
+
+    .toggleButton {
+        right: 8px;
+    }
+}

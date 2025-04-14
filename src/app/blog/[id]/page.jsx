@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Interaction from '@/components/Interaction/Interaction';
 import NewsletterForm from '@/components/NewsletterForm/NewsletterForm';
+import CommentSection from '@/components/CommentSection/CommentSection';
 
 const BlogPost = () => {
 
@@ -50,6 +51,9 @@ const BlogPost = () => {
         />
 
         <Interaction postUrl={`https://yourdomain.com/blog/${post.slug}`} />
+        
+
+        <CommentSection />
 
         {/* Newsletter CTA */}
         <div className="mt-16 border-t pt-16">
