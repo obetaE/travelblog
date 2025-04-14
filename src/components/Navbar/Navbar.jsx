@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Playfair_Display } from 'next/font/google';
 import { useState } from "react"
+import MobileNav from "./MobileNav";
 
   const playfairDisplay = Playfair_Display({
     subsets: ["latin"],
@@ -72,7 +73,8 @@ Combine similar sections under dropdowns. For example:
         </div>
         {/* SIDENAV */}
         <div className={styles.sidecontainer}>
-          <div className={styles.sideNav}>
+          <MobileNav/>
+          {/* <div className={styles.sideNav}>
             <div className={styles.sideHead}>
               <div>
                 <Link
@@ -111,7 +113,7 @@ Combine similar sections under dropdowns. For example:
               <Link href="/" className={styles.book}>
                 Book Now
               </Link>
-            </div>}
+            </div>} */}
         </div>
       </>
     );
