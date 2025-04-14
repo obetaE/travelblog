@@ -1,33 +1,64 @@
-import Image from "next/image";
-import styles from "./post.module.css";
-import PostUser from "@/components/postUser/postUser";
+"use client"
 
+import Image from 'next/image';
+import Interaction from '@/components/Interaction/Interaction';
+import NewsletterForm from '@/components/NewsletterForm/NewsletterForm';
 
-const SinglePostPage = async () => {
+const BlogPost = () => {
+
+  const post = {
+    
+    title: 'Hiking the Inca Trail to Machu Picchu',
+    content: `<p>Lorem ipsum dolor sit amet...</p>`, // Use dangerouslySetInnerHTML carefully
+    date: '2024-03-15',
+    image: 'https://images.pexels.com/photos/7026406/pexels-photo-7026406.jpeg?auto=compress&cs=tinysrgb&w=600',
+    category: 'Adventure',
+    readTime: '8 min read'
+  };
 
   return (
-    <div className={styles.container}>
-        <div className={styles.imgContainer}>
-          <Image src="https://cdn.pixabay.com/photo/2021/07/31/12/26/plane-6511878_640.jpg" alt="" fill className={styles.img} />
+    <div className="min-h-screen bg-gray-50">
+      {/* Post Header */}
+      <div className="max-w-4xl mx-auto px-4 md:px-8 py-16">
+        <div className="mb-8">
+          <span className="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-sm">
+            {post.category}
+          </span>
         </div>
-      <div className={styles.textContainer}>
-        <h1 className={styles.title}>First Post</h1>
-        <div className={styles.detail}>
-              <PostUser />
+        
+        <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+        
+        <div className="flex items-center gap-4 text-gray-500 mb-8">
+          <span>{new Date(post.date).toLocaleDateString()}</span>
+          <span>•</span>
+          <span>{post.readTime}</span>
+        </div>
 
-          <div className={styles.detailText}>
-            <span className={styles.detailTitle}>Published</span>
-            <span className={styles.detailValue}>
-              {/* showing the date it was created and adding tostring to prevent it fro being an object date */}
-              {/* {post.createdAt.toString().slice(4, 16)} */}
-              {`12-06-2024`}
-            </span>
-          </div>
+        <div className="relative h-96 mb-12 rounded-xl overflow-hidden">
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            className="object-cover"
+          />
         </div>
-        <div className={styles.content}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem ipsa, quod sequi mollitia alias numquam aliquam tempore ratione neque quae fugiat aspernatur nihil at eveniet sint pariatur quia. Soluta quaerat nesciunt atque eum accusamus assumenda omnis voluptatem officia ipsam odio voluptatibus corrupti, aspernatur nulla doloremque quo, molestiae hic repudiandae ullam.</div>
+
+        {/* Post Content */}
+        <article 
+          className="prose lg:prose-xl max-w-none mb-12"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
+
+        <Interaction postUrl={`https://yourdomain.com/blog/${post.slug}`} />
+
+        {/* Newsletter CTA */}
+        <div className="mt-16 border-t pt-16">
+          <h2 className="text-2xl font-bold mb-4">Enjoyed this post?</h2>
+          <NewsletterForm />
+        </div>
       </div>
     </div>
   );
 };
 
-export default SinglePostPage;
+export default BlogPost;

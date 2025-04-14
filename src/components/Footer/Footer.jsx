@@ -1,66 +1,37 @@
 import React from "react";
-import styles from "./Footer.module.css";
 import Link from "next/link";
-import Image from "next/image";
+import Interaction from '@/components/Interaction/Interaction';
 
 const Footer = () => {
   return (
-    <div className={styles.container}>
-      <div className={styles.top}>
-        <p>Join Our NewsLetter</p>
-        <form className={styles.subscribe}>
-          <input type="email" placeholder="Enter your email"></input>
-          <button className={styles.button}>Subscribe</button>
-        </form>
-      </div>
-      <div className={styles.bottom}>
-       
-                <Link href="/" className={styles.links}>
-                  <Image
-                    src="https://res.cloudinary.com/dudlxsoui/image/upload/v1733071562/Instagram_iccqog.png"
-                    alt="Instagram"
-                    fill
-                    className={styles.img}
-                  />
-                </Link>
-               <Link
-                  href="/"
-                  className={styles.links}
-                >
-                  <Image
-                    src="https://res.cloudinary.com/dudlxsoui/image/upload/v1733071562/Facebook_hdstbv.png"
-                    alt="Facebook"
-                    width={50}
-                    height={70}
-                    className={styles.img}
-                  />
-                </Link>
-              
-                <Link href="/" className={styles.links}>
-                  <Image
-                    src="https://res.cloudinary.com/dudlxsoui/image/upload/v1737677762/Untitled_design_5_jvxoou.png"
-                    alt="whatsapp"
-                    width={25}
-                    height={25}
-                    className={styles.img}
-                  />
-                </Link>
-              
-                <Link
-                  href="/"
-                  className={styles.links}
-                >
-                  <Image
-                    src="https://res.cloudinary.com/dudlxsoui/image/upload/v1733071562/Twitter_nk36mk.png"
-                    alt="Twitter"
-                    width={20}
-                    height={20}
-                    className={styles.img}
-                  />
-                </Link>
-              <span className={styles.follows}>Follow Us On Our Socials</span>
-      </div>
-    </div>
+
+      <footer className="bg-gray-800 text-white py-12 px-4">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 className="text-emerald-400 font-bold mb-4">Travelling with Erii!!</h3>
+            <p className="text-sm">Authentic travel experiences since 2024</p>
+          </div>
+          <div>
+            <h4 className="font-bold mb-4">Explore</h4>
+            <ul className="space-y-2 text-sm">
+              <li><Link href="/blog" className="hover:text-emerald-400">All Posts</Link></li>
+              <li><Link href="/contact" className="hover:text-emerald-400">Contact Us</Link></li>
+              <li><Link href="/about" className="hover:text-emerald-400">About</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-bold mb-4">Connect</h4>
+            <Interaction postUrl="https://yourdomain.com" />
+          </div>
+          <div>
+            <h4 className="font-bold mb-4">Legal</h4>
+            <ul className="space-y-2 text-sm">
+              <li><Link href="/privacy" className="hover:text-emerald-400">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="hover:text-emerald-400">Terms of Service</Link></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
   );
 };
 

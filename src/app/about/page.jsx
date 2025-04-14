@@ -1,39 +1,109 @@
-import React from 'react'
-import styles from "./about.module.css"
-import Image from "next/image"
+import Image from 'next/image';
+import NewsletterForm from '@/components/NewsletterForm/NewsletterForm';
+import Interaction from '@/components/Interaction/Interaction';
 
-const About = () => {
+const AboutPage = () => {
   return (
-    <div className={styles.container}>
-      <div className={styles.about}>
-        <div className={styles.imgcontainer} >
-          <Image src="https://images.pexels.com/photos/235444/pexels-photo-235444.jpeg?auto=compress&cs=tinysrgb&w=600" alt='profile picture' fill className={styles.img} />
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <section className="relative h-96">
+        <Image
+          src="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt="Cassie backpacking through mountains"
+          fill
+          className="object-cover"
+        />
+        <div className="relative z-10 flex items-center justify-center h-full bg-black/40">
+          <div className="text-center text-white max-w-2xl">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              More Than Just Travel
+            </h1>
+            <p className="text-xl">
+              Building bridges between cultures, one story at a time
+            </p>
           </div>
-          <h1 className={styles.title}>Hii There,</h1>
-          
-          Welcome to <strong>Travelling with Erill!</strong> {`I’m a wanderer at heart, fueled by a passion for discovering hidden corners of the world and sharing stories that inspire. Whether it’s trekking through misty mountains, savoring street food in bustling markets, or finding serenity in remote villages, I believe every journey teaches us something new. This blog is my love letter to the unpredictable, awe-inspiring adventure we call travel.`}
-          <br/>
-          <br/>
-         {` For me, travel isn’t just about ticking destinations off a list—it’s about connection. I thrive on meeting locals, learning cultures, and embracing the unexpected detours that become lifelong memories. Here, you’ll find honest tales of triumphs and mishaps, practical tips for sustainable travel, and a sprinkle of humor for those "lost-in-translation" moments. Let’s ditch the tourist traps and explore the world with curiosity and kindness!`}
+        </div>
+      </section>
 
+      {/* Main Content */}
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-16">
+        {/* Introduction Section */}
+        <section className="flex flex-col md:flex-row gap-12 mb-16">
+          <div className="md:w-1/3 relative h-96 rounded-xl overflow-hidden shadow-lg">
+            <Image
+              src="https://images.pexels.com/photos/3764119/pexels-photo-3764119.jpeg?auto=compress&cs=tinysrgb&w=600"
+              alt="Cassie smiling at a local market"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="md:w-2/3">
+            <h2 className="text-3xl font-bold mb-6">Hey, I'm Cassie!</h2>
+            <p className="text-gray-600 mb-4">
+              What began as a solo backpacking trip through Southeast Asia in 2018 
+              transformed into a lifelong passion for authentic storytelling. I'm not 
+              your typical travel influencer - you won't find me posing at luxury 
+              resorts or promoting tourist traps. My heart beats for the raw, 
+              unfiltered moments that travel reveals.
+            </p>
+            <p className="text-gray-600 mb-4">
+              Through <strong>Travelling with Erill</strong>, I aim to:
+            </p>
+            <ul className="list-disc pl-6 mb-6 text-gray-600 space-y-2">
+              <li>Showcase destinations through local perspectives</li>
+              <li>Provide practical sustainable travel guides</li>
+              <li>Document cultural preservation efforts</li>
+              <li>Share budget-friendly adventure strategies</li>
+            </ul>
+            <Interaction postUrl="https://yourdomain.com/about" />
+          </div>
+        </section>
 
-      <div className={styles.sectionContainer}>
-      <Image src="https://media.istockphoto.com/id/1322277517/photo/wild-grass-in-the-mountains-at-sunset.jpg?s=612x612&w=0&k=20&c=6mItwwFFGqKNKEAzv0mv6TaxhLN3zSE43bWmFN--J5w=" alt='profile picture' fill className={styles.img} />
+        {/* Mission Statement */}
+        <section className="bg-white rounded-xl p-8 shadow-lg mb-16">
+          <h3 className="text-2xl font-bold mb-6 text-center">
+            Our Core Philosophy
+          </h3>
+          <p className="text-gray-600 text-center max-w-3xl mx-auto">
+            "Travel should be a bridge, not a commodity. We believe in moving 
+            through the world with respect, curiosity, and a commitment to leave 
+            places better than we find them. Every story shared here is a 
+            testament to the incredible diversity of human experience and the 
+            breathtaking beauty of our planet."
+          </p>
+        </section>
+
+        {/* Journey Timeline */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold mb-8 text-center">Our Journey</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center p-6 bg-white rounded-lg shadow-md">
+              <div className="text-emerald-500 text-4xl font-bold mb-2">6+</div>
+              <div className="text-gray-600">Years Exploring</div>
+            </div>
+            <div className="text-center p-6 bg-white rounded-lg shadow-md">
+              <div className="text-emerald-500 text-4xl font-bold mb-2">54</div>
+              <div className="text-gray-600">Countries Visited</div>
+            </div>
+            <div className="text-center p-6 bg-white rounded-lg shadow-md">
+              <div className="text-emerald-500 text-4xl font-bold mb-2">1M+</div>
+              <div className="text-gray-600">Words Written</div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="text-center py-12">
+          <h3 className="text-2xl font-bold mb-4">Join Our Community</h3>
+          <p className="text-gray-600 mb-8 max-w-xl mx-auto">
+            Get exclusive stories, behind-the-scenes content, and early access to 
+            new guides straight to your inbox
+          </p>
+          <NewsletterForm />
+        </section>
       </div>
-
-      <b>Join me as I navigate winding trails carved by time and nature</b>{`—from moss-covered paths in ancient forests to sun-scorched ridges where the sky kisses the earth. Together, we’ll chase golden-hour light, not just for the perfect photo, but to capture fleeting moments that remind us how alive we are: a child’s laughter in a Marrakech souk, the whisper of alpine winds, or the dance of fireflies in a Thai jungle. Every journey unveils stories`}<b>—stories of resilience in remote Himalayan villages, of generational recipes shared in Sicilian kitchens, of wildlife thriving in Botswana’s untamed plains—</b>{`that celebrate our planet’s breathtaking diversity.
-
-This space is more than a blog;`} <b>it’s a treasure trove for the curious.</b> {`Dive into detailed gear reviews (because blistered feet shouldn’t slow your spirit), heartfelt reflections on solitude under Patagonian stars, and practical guides for traveling light without sacrificing wonder. Whether you’re a weekend hiker or a full-time nomad, these pages are for those who believe the best journeys ignite the soul as much as they awaken the senses.
-
-Let’s wander wildly—`}<b>getting lost in Kyoto’s cherry-blossom alleys, tracing the footsteps of Inca trailblazers, or sharing fireside tales with Mongolian herders. </b>{`Let’s wonder deeply—about our place in this vast, fragile world and how to tread gently upon it. Because the footprints we leave aren’t just on trails or beaches; they’re etched in the lives we touch and the memories we carry. Adventure isn’t a destination—`}<b>it’s the courage to embrace the unknown, and I’m thrilled to have you here, fellow explorer, as we write this story together.</b>
-<br/>
-<br/>
-<br/>
-
-      </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default About
+export default AboutPage;
