@@ -12,7 +12,7 @@ const MobileNav = () => {
   };
 
   const navItems = [
-    { name: 'Home', path: '/home', icon: <FiHome /> },
+    { name: 'Home', path: '/homepage', icon: <FiHome /> },
     { name: 'About', path: '/about', icon: <FiUser /> },
     { name: 'Blog', path: '/blog', icon: <FiBook /> },
     { name: 'Contact Us', path: '/contact', icon: <FiMail /> },
