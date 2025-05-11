@@ -67,7 +67,7 @@ const MobileNav = () => {
 
               {/* Footer/branding */}
               <div className="mt-auto pt-4 border-t border-gray-100">
-                <p className="text-sm text-gray-500">Travelling with Erill</p>
+                <p className="text-sm text-gray-500">Travelling with Eri!!!</p>
               </div>
             </div>
           </div>
