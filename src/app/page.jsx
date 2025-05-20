@@ -20,23 +20,44 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.imgcontainer}>
-        <Image src="https://cdn.pixabay.com/photo/2016/01/09/18/27/camera-1130731_640.jpg" alt="Login Photo" fill className={styles.img} />
+        <Image 
+          src="https://cdn.pixabay.com/photo/2016/01/09/18/27/camera-1130731_640.jpg" 
+          alt="Login Photo" 
+          fill 
+          className={styles.img}
+          priority
+        />
+        <div className={styles.imageOverlay} />
       </div>
-      <form className={styles.login} >
-        <h1>Welcome Back!!</h1>
-        <span>
-          <label htmlFor="email">Email:</label>
-          <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" placeholder="Type Your Email" />
-        </span>
-        <span className={styles.passwordWrapper}>
-          <label htmlFor="password">Password:</label>
-          <div className={styles.passwordInput}>
+      
+      <form className={styles.login}>
+        <div className={styles.header}>
+          <h1>Welcome Back!</h1>
+          <p className={styles.subtitle}>Sign in to continue your creative journey</p>
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label htmlFor="email">Email Address</label>
+          <input 
+            onChange={(e) => setEmail(e.target.value)}
+            type="email" 
+            name="email" 
+            id="email" 
+            className={styles.inputField}
+            placeholder="your@email.com"
+          />
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label htmlFor="password">Password</label>
+          <div className={styles.passwordWrapper}>
             <input
               onChange={(e) => setPassword(e.target.value)}
               type={showPassword ? "text" : "password"}
               name="password"
               id="password"
-              placeholder="Type Your Password"
+              className={styles.inputField}
+              placeholder="••••••••"
             />
             <button
               type="button"
@@ -44,22 +65,25 @@ export default function Home() {
               onClick={() => setShowPassword(!showPassword)}
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
-              {showPassword ?
-                <Eye size={20} color="black" />   // Show icon
-                :
-                <EyeOff size={20} color="red" />  // Hide icon
-              }
+              {showPassword ? (
+                <Eye size={20} className={styles.eyeIcon} />
+              ) : (
+                <EyeOff size={20} className={styles.eyeIcon} />
+              )}
             </button>
           </div>
-        </span>
-        <button className={styles.button} >Login</button>
+        </div>
 
-        {error && <p className={styles.error}>{error}</p>}
-        {success && <p className={styles.success}>{success}</p>}
+        <button className={styles.button}>
+          Sign In
+        </button>
 
-        <Link className={styles.account} href="/register">
-          {`Don't have an account?`} <span >Register</span>
-        </Link>
+        {error && <div className={styles.error}><span>⚠</span> {error}</div>}
+        {success && <div className={styles.success}><span>✓</span> {success}</div>}
+
+        <p className={styles.registerPrompt}>
+          New here? <Link href="/register" className={styles.registerLink}>Create an account</Link>
+        </p>
       </form>
     </div>
   );
