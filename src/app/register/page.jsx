@@ -72,7 +72,7 @@ export default function Register() {
                 const form = e.target;
                 form.reset();
                 setSuccess("Login Successful!!")
-                router.push("/login")
+                router.push("/")
             } else{
                 console.log("User Registration Failed")
             }

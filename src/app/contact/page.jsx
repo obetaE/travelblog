@@ -34,7 +34,7 @@ const ContactPage = () => {
                 <Mail size={24} className={styles.icon} />
                 <div>
                   <h3>Email Us</h3>
-                  <p>hello@creativehub.com<br/>support@creativehub.com</p>
+                  <p>Obetachukwuka1@gmail.com<br/>support@creativehub.com</p>
                 </div>
               </div>
 
@@ -42,7 +42,7 @@ const ContactPage = () => {
                 <Phone size={24} className={styles.icon} />
                 <div>
                   <h3>Call Us</h3>
-                  <p>+1 (555) 123-4567<br/>Mon-Fri: 9am - 5pm EST</p>
+                  <p>+234 805 102 5661<br/>Mon-Fri: 9am - 5pm EST</p>
                 </div>
               </div>
 
@@ -102,7 +102,7 @@ const ContactPage = () => {
                 <input 
                   id="email" 
                   type="email" 
-                  placeholder="your.email@example.com"
+                  placeholder="Obetachukwuka1@gmail.com"
                   className={styles.formInput}
                 />
               </div>
@@ -111,7 +111,7 @@ const ContactPage = () => {
                 <input 
                   id="phone" 
                   type="tel" 
-                  placeholder="+1 (555) 000-0000"
+                  placeholder="+234 805 102 5661"
                   className={styles.formInput}
                 />
               </div>

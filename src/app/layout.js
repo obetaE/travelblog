@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar"
 import Footer from "@/components/Footer/Footer";
 import { Merriweather } from "next/font/google";
+import { AuthProvider } from "./Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,9 +31,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${merriWeather.className} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <AuthProvider>
         <Navbar/>
         {children}
         <Footer/>
+        </AuthProvider>
       </body>
     </html>
   );
