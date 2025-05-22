@@ -3,9 +3,22 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { FiMenu, FiX, FiHome, FiUser, FiBook, FiMail, FiLogIn } from 'react-icons/fi';
+import { useRouter } from 'next/navigation';
+
+
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react"
 
 const MobileNav = () => {
+
+  const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  const handleLogout = () =>{
+    toggleMenu();
+    signOut();
+    router.push("/")
+  }
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -16,7 +29,6 @@ const MobileNav = () => {
     { name: 'About', path: '/about', icon: <FiUser /> },
     { name: 'Blog', path: '/blog', icon: <FiBook /> },
     { name: 'Contact Us', path: '/contact', icon: <FiMail /> },
-    { name: 'Login', path: '/', icon: <FiLogIn /> }
   ];
 
   return (
@@ -62,6 +74,25 @@ const MobileNav = () => {
                       </Link>
                     </li>
                   ))}
+                  <li >
+                    {session?.user ? (
+                      <button 
+                      onClick={handleLogout} 
+                      className="flex items-center p-3 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 rounded-lg transition-colors">
+                        <span className="mr-3 text-lg"><FiLogIn /> </span>
+                        <span className="font-medium">Logout</span>
+                        </button>
+                    ) : (
+                      <Link
+                        href="/"
+                        onClick={toggleMenu}
+                        className="flex items-center p-3 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 rounded-lg transition-colors"
+                      >
+                        <span className="mr-3 text-lg"><FiLogIn /> </span>
+                        <span className="font-medium">Login</span>
+                      </Link>
+                    )}
+                  </li>
                 </ul>
               </nav>
 

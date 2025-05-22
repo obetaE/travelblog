@@ -7,6 +7,9 @@ import { Playfair_Display } from 'next/font/google';
 import { useState } from "react"
 import MobileNav from "./MobileNav";
 
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+
   const playfairDisplay = Playfair_Display({
     subsets: ["latin"],
     weight: ["400", "700"], // Adjust weights based on your needs
@@ -15,16 +18,7 @@ import MobileNav from "./MobileNav";
 
 export default function Home(){
 
-  const [open, setOpen] = useState(false)
-
-  {
-    /*
-    Group Links:
-Combine similar sections under dropdowns. For example:
-"Rooms": Group "Rooms & Suites" and "Offers & Packages."
-"Explore": Group "Dining & Nightlife" and "Amenities."
-    */
-  } 
+  const {data: session} = useSession();
 
     const navLinks = [
       {
@@ -66,54 +60,21 @@ Combine similar sections under dropdowns. For example:
                 {links.title}
               </Link>
             ))}
-            <Link href="/" className={styles.book}>
+            {session?.user ? (
+              <button onClick={() => signOut()} className={styles.book}>Logout</button>
+            ):(
+              <Link href="/" className={styles.book}>
               Login
             </Link>
+            )}
+
+            
           </div>
         </div>
         {/* SIDENAV */}
         <div className={styles.sidecontainer}>
           <MobileNav/>
-          {/* <div className={styles.sideNav}>
-            <div className={styles.sideHead}>
-              <div>
-                <Link
-                  href="/"
-                  className={`${styles.left} ${playfairDisplay.className}`}
-                >
-                  Gamma Suites
-                </Link>
-              </div>
-
-              <div className="flex">
-                {open ? (
-                  <div onClick={() => setOpen(false)} className={styles.menu}>
-                    X
-                  </div>
-                ) : (
-                  <div onClick={() => setOpen(true)} className={styles.menu}>
-                    O
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-            { open && <div className={styles.overlay}>
-              {navLinks.map((links) => (
-                <Link
-                  key={links.path}
-                  href={links.path}
-                  className={`${styles.links} ${
-                    pathName === links.path && styles.active
-                  }`}
-                >
-                  {links.title}
-                </Link>
-              ))}
-              <Link href="/" className={styles.book}>
-                Book Now
-              </Link>
-            </div>} */}
+          
         </div>
       </>
     );
