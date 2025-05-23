@@ -1,29 +1,36 @@
 "use client"
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from "./blog.module.css"
 
 const BlogPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Sample post data - replace with your CMS/API data
-  const posts = [
-    {
-      id: 1,
-      title: 'Hiking the Inca Trail to Machu Picchu',
-      excerpt: 'A comprehensive guide to tackling one of the world\'s most famous hikes...',
-      category: 'Adventure',
-      date: '2024-03-15',
-      slug: 'inca-trail-guide',
-      image: 'https://images.pexels.com/photos/7026406/pexels-photo-7026406.jpeg?auto=compress&cs=tinysrgb&w=600',
-      readTime: '8 min read'
-    },
-    // Add more posts...
-  ];
+
 
   const categories = ['All', 'Adventure', 'Culture', 'Food', 'Sustainable Travel'];
+
+    useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('/api/blog'); // Match your API route
+        if (!response.ok) throw new Error('Failed to fetch posts');
+        const data = await response.json();
+        setPosts(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   const filteredPosts = posts.filter(post => {
     const matchesCategory = selectedCategory.toLowerCase() === 'all' || 
@@ -31,7 +38,11 @@ const BlogPage = () => {
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
-  });
+  }); 
+
+  if (loading) return <div className={styles.loading}>Loading posts...</div>;
+  if (error) return <div className={styles.error}>Error: {error}</div>;
+
 
   return (
     <div className={styles.container}>
@@ -70,8 +81,8 @@ const BlogPage = () => {
         {/* Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPosts.map(post => (
-            <article key={post.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-              <Link href={`/blog/${post.slug}`}>
+            <article key={post._id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+              <Link href={`/blog/${post._id}`}>
                 <div className="relative h-48">
                   <Image
                     src={post.image}
@@ -82,7 +93,7 @@ const BlogPage = () => {
                 </div>
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-2 text-sm text-gray-500">
-                    <span>{new Date(post.date).toLocaleDateString()}</span>
+                    <span>{new Date(post.createdAt).toLocaleDateString()}</span>
                     <span>{post.readTime}</span>
                   </div>
                   <h3 className="text-xl font-bold mb-2">{post.title}</h3>

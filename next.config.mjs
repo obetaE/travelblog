@@ -2,6 +2,11 @@
 const nextConfig = {
   images: {
     remotePatterns: [
+            {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/divixqupd/**", // Matches all paths specific to your account
+      },
       {
         protocol: "https",
         hostname: "images.pexels.com",

@@ -13,6 +13,7 @@ export default function RegisterForm() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmpassword, setConfirmpassword] = useState("")
+    const [isAdmin, setIsAdmin] = useState(false)
     const [success, setSuccess] = useState("")
     const [error, setError] = useState("")
     const [showPassword, setShowPassword] = useState(false);
@@ -64,7 +65,7 @@ export default function RegisterForm() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    fullname, email, password
+                    fullname, email, password, isAdmin
                 })
             })
 
@@ -179,6 +180,18 @@ export default function RegisterForm() {
                         </button>
                     </div>
                 </div>
+
+                {/* <div className={styles.inputGroup}>
+                    <label htmlFor="email">Email Address</label>
+                    <input
+                        onChange={(e) => setEmail(e.target.value)}
+                        type="email"
+                        name="email"
+                        id="email"
+                        className={styles.inputField}
+                        placeholder="your@email.com"
+                    />
+                </div> */}
 
                 <button className={styles.button} disabled={isSubmitting}>
                     {isSubmitting ? "Creating Account..." : "Create Account"}
