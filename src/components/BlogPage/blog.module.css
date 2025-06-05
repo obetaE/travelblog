@@ -1,0 +1,207 @@
+.container {
+    padding-top: 4rem;
+    overflow: hidden;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  .loading{
+    height: 100vh;
+    width: 100%;
+    padding-top: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: green;
+  }
+
+
+
+  /* Loading container */
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(45deg, rgba(42, 92, 84, 0.05) 0%, rgba(138, 155, 110, 0.03) 100%);
+}
+
+/* Book styling */
+.book {
+  position: relative;
+  width: 280px;
+  height: 360px;
+  perspective: 2000px;
+}
+
+/* Book cover */
+.cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #2a5c54 0%, #1f4a44 100%);
+  border-radius: 10px 15px 15px 10px;
+  box-shadow: 0 10px 30px rgba(42, 92, 84, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  z-index: 10;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.coverTitle {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.coverSubtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* Pages */
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 10px 15px 15px 10px;
+  padding: 2rem;
+  box-shadow: 
+    0 0 10px rgba(0, 0, 0, 0.05),
+    0 2px 4px rgba(0, 0, 0, 0.05);
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pageContent {
+  padding: 1rem;
+  border-left: 2px solid #e2e8f0;
+}
+
+.pageContent h3 {
+  color: #2a5c54;
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.pageContent p {
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+/* Page animations */
+.page1 {
+  animation: flipPage1 8s infinite;
+  z-index: 9;
+}
+
+.page2 {
+  animation: flipPage2 8s infinite;
+  z-index: 8;
+}
+
+.page3 {
+  animation: flipPage3 8s infinite;
+  z-index: 7;
+}
+
+.page4 {
+  animation: flipPage4 8s infinite;
+  z-index: 6;
+}
+
+.page5 {
+  animation: flipPage5 8s infinite;
+  z-index: 5;
+}
+
+.page6 {
+  animation: flipPage6 8s infinite;
+  z-index: 4;
+}
+
+/* Keyframes for page flipping */
+@keyframes flipPage1 {
+  0%, 15% { transform: rotateY(0deg); }
+  16%, 30% { transform: rotateY(-180deg); }
+  31%, 100% { transform: rotateY(-180deg); }
+}
+
+@keyframes flipPage2 {
+  0%, 30% { transform: rotateY(0deg); }
+  31%, 45% { transform: rotateY(-180deg); }
+  46%, 100% { transform: rotateY(-180deg); }
+}
+
+@keyframes flipPage3 {
+  0%, 45% { transform: rotateY(0deg); }
+  46%, 60% { transform: rotateY(-180deg); }
+  61%, 100% { transform: rotateY(-180deg); }
+}
+
+@keyframes flipPage4 {
+  0%, 60% { transform: rotateY(0deg); }
+  61%, 75% { transform: rotateY(-180deg); }
+  76%, 100% { transform: rotateY(-180deg); }
+}
+
+@keyframes flipPage5 {
+  0%, 75% { transform: rotateY(0deg); }
+  76%, 90% { transform: rotateY(-180deg); }
+  91%, 100% { transform: rotateY(-180deg); }
+}
+
+@keyframes flipPage6 {
+  0%, 90% { transform: rotateY(0deg); }
+  91%, 100% { transform: rotateY(-180deg); }
+}
+
+/* Error message styling */
+.error {
+  display: flex;
+  justify-content: center;  
+  align-items: center;
+  min-height: 100vh;
+  background: #fff0f0;
+  color: #dc2626;
+  font-size: 1.2rem;  
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .book {
+    width: 220px;
+    height: 300px;
+  }
+  
+  .coverTitle {
+    font-size: 1.8rem;
+  }
+  
+  .coverSubtitle {
+    font-size: 1rem;
+  }
+  
+  .pageContent h3 {
+    font-size: 1.2rem;
+  }
+  
+  .pageContent p {
+    font-size: 0.9rem;
+  }
+}

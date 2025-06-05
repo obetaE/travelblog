@@ -4,3 +4,272 @@
     width: 100%;
     min-height: 100vh;
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* ===== HERO SECTION ===== */
+  .hero {
+    position: relative;
+    height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .heroImageContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .heroImage {
+    object-fit: cover;
+    filter: grayscale(20%);
+  }
+  
+  .heroOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(42, 92, 84, 0.6) 0%, rgba(138, 155, 110, 0.4) 100%);
+    z-index: 1;
+  }
+  
+  .heroContent {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+    padding: 0 2rem;
+  }
+  
+  .heroTitle {
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  
+  .heroSubtitle {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+  }
+  
+  .heroButton {
+    display: inline-block;
+    background: #2a5c54;
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .heroButton:hover {
+    background: #1f4a44;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(42, 92, 84, 0.3);
+  }
+  
+  /* ===== SECTION COMMON STYLES ===== */
+  .section {
+    padding: 5rem 2rem;
+  }
+  
+  .sectionContent {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .sectionTitle {
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #2a5c54;
+  }
+  
+  /* ===== FEATURED POSTS ===== */
+  .featuredGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .featuredCard {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 350px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .featuredCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  .cardImageContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .cardImage {
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .featuredCard:hover .cardImage {
+    transform: scale(1.05);
+  }
+  
+  .cardOverlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    z-index: 1;
+  }
+  
+  .cardContent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem;
+    z-index: 2;
+  }
+  
+  .cardCategory {
+    display: inline-block;
+    color: #8a9b6e;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+  
+  .cardTitle {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+  }
+  
+  /* ===== TRAVELER SECTION ===== */
+  .travelerSection {
+    background: #f9fafb;
+  }
+  
+  .travelerContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  .travelerImageContainer {
+    position: relative;
+    height: 500px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .travelerImage {
+    object-fit: cover;
+  }
+  
+  .travelerContent {
+    padding: 0 1rem;
+  }
+  
+  .travelerText {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #4a5568;
+    margin-bottom: 1.5rem;
+  }
+  
+  .travelerLink {
+    color: #2a5c54;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .travelerLink:hover {
+    color: #1f4a44;
+    text-decoration: underline;
+  }
+  
+  /* ===== NEWSLETTER SECTION ===== */
+  .newsletterSection {
+    background: linear-gradient(45deg, rgba(42, 92, 84, 0.05) 0%, rgba(138, 155, 110, 0.03) 100%);
+    text-align: center;
+  }
+  
+  .newsletterText {
+    font-size: 1.1rem;
+    color: #4a5568;
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+  
+  /* ===== RESPONSIVE STYLES ===== */
+  @media (max-width: 768px) {
+    .hero {
+      height: 70vh;
+    }
+    
+    .heroTitle {
+      font-size: 2.2rem;
+    }
+    
+    .section {
+      padding: 3rem 1.5rem;
+    }
+    
+    .travelerContainer {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    .travelerImageContainer {
+      height: 350px;
+    }
+    
+    .featuredGrid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .heroTitle {
+      font-size: 1.8rem;
+    }
+    
+    .heroSubtitle {
+      font-size: 1rem;
+    }
+    
+    .sectionTitle {
+      font-size: 1.8rem;
+    }
+  }

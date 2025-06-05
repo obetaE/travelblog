@@ -1,166 +1,97 @@
-"use client"
-import { useState, useRef } from 'react'; // Added useRef
-import styles from './admin.module.css';
-import axios from 'axios';
+"use client";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import styles from "./admin.module.css";
+import AddPosts from "@/components/Admin/AddPosts";
+import ManagePosts from "@/components/Admin/ManagePosts";
+import AddUsers from "@/components/Admin/AddUsers";
+import ManageUsers from "@/components/Admin/ManageUsers";
+import { useSession } from "next-auth/react";
 
 const AdminPanel = () => {
-  const [formData, setFormData] = useState({
-    title: '',
-    desc: '',
-    category: 'Adventure',
-    readTime: ''
-  });
-  const [file, setFile] = useState();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const fileInput = useRef(); // Added ref
+  const [activeTab, setActiveTab] = useState("posts");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-  const categories = ['Adventure', 'Culture', 'Food', 'Sustainable Travel'];
+  const { data: session, status } = useSession();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-    setSuccess('');
+  useEffect(() => {
+    // Check authentication and admin status
+    if (status === "loading") return; // Session is still loading
 
-    try {
-      // Validate required fields FIRST
-      if (!formData.title || !formData.desc || !file || !formData.readTime) {
-        setError('All fields are required');
-        setLoading(false);
-        return;
-      }
+    console.log(session)
 
-      // 1. Upload to Cloudinary FIRST
-      const cloudinaryData = new FormData();
-      cloudinaryData.append("file", file);
-      cloudinaryData.append("upload_preset", "uploads");
-
-const uploadRes = await axios.post(
-  "https://api.cloudinary.com/v1_1/divixqupd/image/upload",
-  cloudinaryData
-).catch((err) => {
-  console.log("CLOUDINARY ERROR DETAILS:", err.response?.data);
-  throw err; // Rethrow to trigger catch block
-});
-
-      // 2. Create post data WITH image URL
-      const postData = {
-        ...formData,
-        image: uploadRes.data.secure_url
-      };
-
-      // 3. Send to backend
-      const response = await fetch('/api/blog', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(postData),
-      });
-
-      if (!response.ok) throw new 
-      Error('Failed to create post');
-
-      // Reset form PROPERLY
-      setFormData({ title: '', desc: '', category: 'Adventure', readTime: '' });
-      setFile(null);
-      fileInput.current.value = ''; // Clear file input
-      setSuccess('Post created successfully!');
-
-    } catch (err) {
-      setError(err.response?.data?.message || err.message);
-    } finally {
+    if (!session) {
+      // Not authenticated - redirect to login
+      router.replace("/");
+    } else if (!session.user?.isAdmin) {
+      // Not an admin - redirect to home
+      router.replace("/homepage");
+    } else {
+      // Valid admin user
+      setIsAdmin(true);
       setLoading(false);
     }
-  };
+  }, [session, status, router]);
 
+  if (loading || status === "loading") {
+    return (
+      <div className={styles.loadingContainer}>
+        <div className={styles.loadingSpinner}></div>
+        <p>Verifying admin privileges...</p>
+      </div>
+    );
+  }
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  if (!isAdmin) {
+    // Already handled by useEffect, but return null while redirecting
+    return null;
+  }
 
   return (
     <div className={styles.container}>
-      <div className={styles.adminContainer}>
-        <h1 className={styles.adminTitle}>Create New Post</h1>
+      <div className={styles.tabContainer}>
+        <button
+          className={`${styles.tab} ${
+            activeTab === "posts" ? styles.active : ""
+          }`}
+          onClick={() => setActiveTab("posts")}
+        >
+          Posts Management
+        </button>
+        <button
+          className={`${styles.tab} ${
+            activeTab === "users" ? styles.active : ""
+          }`}
+          onClick={() => setActiveTab("users")}
+        >
+          User Management
+        </button>
+      </div>
 
-        <form onSubmit={handleSubmit} className={styles.adminForm}>
-         
-
-          <div className={styles.formGroup}>
-            <label>Title</label>
-            <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              required
-            />
+      <div className={styles.content}>
+        {activeTab === "posts" && (
+          <div className={styles.tabContent}>
+            <div className={styles.left}>
+              <AddPosts />
+            </div>
+            <div className={styles.right}>
+              <ManagePosts />
+            </div>
           </div>
+        )}
 
-          <div className={styles.formGroup}>
-            <label>Description</label>
-            <textarea
-              name="desc"
-              value={formData.desc}
-              onChange={handleChange}
-              required
-              rows="5"
-            />
+        {activeTab === "users" && (
+          <div className={styles.tabContent}>
+            <div className={styles.left}>
+              <AddUsers />
+            </div>
+            <div className={styles.left}>
+              <ManageUsers />
+            </div>
           </div>
-
-          <div className={styles.formGroup}>
-            <label>Category</label>
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-            >
-              {categories.map(category => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className={styles.formGroup}>
-            <label>Image URL</label>
-            <input
-              type="file"
-              name="image"
-              ref={fileInput} // Use the ref
-              onChange={(e) => setFile(e.target.files[0])}
-              required
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label>Read Time</label>
-            <input
-              type="text"
-              name="readTime"
-              value={formData.readTime}
-              onChange={handleChange}
-              placeholder="e.g., 5 min read"
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            className={styles.submitButton}
-            disabled={loading}
-          >
-            {loading ? 'Creating...' : 'Create Post'}
-          </button>
-        </form>
-         {error && <p className={styles.errorMessage}>{error}</p>}
-          {success && <p className={styles.successMessage}>{success}</p>}
-
+        )}
       </div>
     </div>
   );

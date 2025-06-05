@@ -24,10 +24,13 @@ export default function LoginForm() {
     setIsSubmitting(true);
 
     try {
-        const res = await signIn('credentials', { 
-          email, 
-          password, 
-          redirect: false, 
+
+      const normalizedEmail = email.toLowerCase().trim();
+
+        const res = await signIn("credentials", {
+          email: normalizedEmail,
+          password,
+          redirect: false,
         });
 
         if (res.error) {

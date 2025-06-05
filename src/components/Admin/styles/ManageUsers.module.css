@@ -1,0 +1,243 @@
+/* styles/ManageUsers.module.css */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 3rem;
+    font-size: 1.2rem;
+    color: #4a5568;
+  }
+  
+  .search {
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  
+  .searchBar {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    padding-left: 3.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8fafc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .searchBar:focus {
+    outline: none;
+    border-color: #818cf8;
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+    background-color: white;
+  }
+  
+  .searchBar::placeholder {
+    color: #a0aec0;
+  }
+  
+  .search:before {
+    content: "🔍";
+    position: absolute;
+    left: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a0aec0;
+    font-size: 1.2rem;
+  }
+  
+  .userList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .user {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #edf2f7;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .user:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  }
+  
+  .details {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+  }
+  
+  .details img {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f1f5f9;
+  }
+  
+  .details > div {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .details span {
+    font-weight: 600;
+    color: #2d3748;
+  }
+  
+  .details p {
+    color: #718096;
+    font-size: 0.9rem;
+    margin-top: 0.2rem;
+  }
+  
+  .actions {
+    position: relative;
+  }
+
+  .noResults {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.actions {
+    position: relative;
+}
+
+.confirmationModal {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 10;
+    min-width: 200px;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+}
+  
+  .delete {
+    background: #fff5f5;
+    color: #e53e3e;
+    border: 1px solid #fed7d7;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .delete:hover {
+    background: #fee2e2;
+  }
+  
+  .confirmationDialog {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: 1px solid #e2e8f0;
+    animation: fadeIn 0.2s ease-out;
+  }
+  
+  .confirmationDialog p {
+    font-weight: 600;
+    color: #2d3748;
+    text-align: center;
+  }
+  
+  .dialogButtons {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+  }
+  
+  .dialogButtons button {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .confirmDelete {
+    background: #e53e3e;
+    color: white;
+    border: none;
+  }
+  
+  .confirmDelete:hover {
+    background: #c53030;
+  }
+  
+  .cancel {
+    background: #edf2f7;
+    color: #4a5568;
+    border: none;
+  }
+  
+  .cancel:hover {
+    background: #e2e8f0;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .userList {
+      grid-template-columns: 1fr;
+    }
+    
+    .container {
+      padding: 0 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .user {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+    
+    .actions {
+      align-self: flex-end;
+    }
+  }
