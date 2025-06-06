@@ -75,24 +75,6 @@ const BlogPage = () => {
               <p>Camping under starry skies...</p>
             </div>
           </div>
-          <div className={`${styles.page} ${styles.page4}`}>
-            <div className={styles.pageContent}>
-              <h3>Travel Tips</h3>
-              <p>Packing essentials for every journey...</p>
-            </div>
-          </div>
-          <div className={`${styles.page} ${styles.page5}`}>
-            <div className={styles.pageContent}>
-              <h3>Hidden Gems</h3>
-              <p>Discovering off-the-beaten-path wonders...</p>
-            </div>
-          </div>
-          <div className={`${styles.page} ${styles.page6}`}>
-            <div className={styles.pageContent}>
-              <h3>Cultural Immersion</h3>
-              <p>Connecting with local traditions...</p>
-            </div>
-          </div>
         </div>
       </div>
     );
@@ -106,86 +88,77 @@ const BlogPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className="min-h-screen bg-gray-50">
-        {/* Blog Header */}
-        <div className="bg-[url('https://images.pexels.com/photos/1212487/pexels-photo-1212487.jpeg?auto=compress&cs=tinysrgb&w=600')] bg-cover bg-center w-full relative text-white py-16 text-center">
-          <div className="relative z-10">
-            <h1 className="text-4xl font-bold mb-4">Travel Stories</h1>
-            <p className="text-xl">
-              Discover authentic experiences from around the globe
-            </p>
-          </div>
+      {/* Blog Header */}
+      <div className={styles.header}>
+        <div className={styles.headerContent}>
+          <h1 className={styles.title}>Travel Stories</h1>
+          <p className={styles.subtitle}>
+            Discover authentic experiences from around the globe
+          </p>
         </div>
+      </div>
 
-        {/* Filters and Search */}
-        <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
-          <div className="flex flex-col md:flex-row gap-4 mb-8">
-            <input
-              type="text"
-              placeholder="Search posts..."
-              className="flex-1 p-3 rounded-lg border"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <select
-              className="p-3 rounded-lg border"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              {categories.map((category) => (
-                <option key={category} value={category.toLowerCase()}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Posts Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.map((post) => (
-              <article
-                key={post._id}
-                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-              >
-                <Link href={`/blog/${post._id}`}>
-                  <div className="relative h-48">
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-2 text-sm text-gray-500">
-                      <span>
-                        {new Date(post.createdAt).toLocaleDateString()}
-                      </span>
-                      <span>{post.readTime}</span>
-                    </div>
-                    <h3 className="text-xl font-bold mb-2">{post.title}</h3>
-                    <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                    <span className="inline-block bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-sm">
-                      {post.category}
-                    </span>
-                  </div>
-                </Link>
-              </article>
+      {/* Filters and Search */}
+      <div className={styles.filtersContainer}>
+        <div className={styles.searchGroup}>
+          <input
+            type="text"
+            placeholder="Search posts..."
+            className={styles.searchInput}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <select
+            className={styles.categorySelect}
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            {categories.map((category) => (
+              <option key={category} value={category.toLowerCase()}>
+                {category}
+              </option>
             ))}
-          </div>
-
-          {/* Pagination */}
-          <div className="flex justify-center gap-2 mt-12">
-            {[1, 2, 3].map((page) => (
-              <button
-                key={page}
-                className="px-4 py-2 rounded-lg bg-white border hover:bg-emerald-50"
-              >
-                {page}
-              </button>
-            ))}
-          </div>
+          </select>
         </div>
+      </div>
+
+      {/* Posts Grid */}
+      <div className={styles.postsGrid}>
+        {filteredPosts.map((post) => (
+          <article key={post._id} className={styles.postCard}>
+            <Link href={`/blog/${post._id}`} className={styles.postLink}>
+              <div className={styles.imageContainer}>
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  fill
+                  className={styles.postImage}
+                />
+                <div className={styles.imageOverlay} />
+              </div>
+              <div className={styles.postContent}>
+                <div className={styles.postMeta}>
+                  <span className={styles.postDate}>
+                    {new Date(post.createdAt).toLocaleDateString()}
+                  </span>
+                  <span className={styles.readTime}>{post.readTime}</span>
+                </div>
+                <h3 className={styles.postTitle}>{post.title}</h3>
+                <p className={styles.postExcerpt}>{post.excerpt}</p>
+                <span className={styles.postCategory}>{post.category}</span>
+              </div>
+            </Link>
+          </article>
+        ))}
+      </div>
+
+      {/* Pagination */}
+      <div className={styles.pagination}>
+        {[1, 2, 3].map((page) => (
+          <button key={page} className={styles.paginationButton}>
+            {page}
+          </button>
+        ))}
       </div>
     </div>
   );
