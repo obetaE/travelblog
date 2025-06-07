@@ -154,9 +154,11 @@ const BlogPost = () => {
 
         <Interaction
           postUrl={`https://travelwitherii.vercel.app/blog/${post._id}`}
+          postId={post._id}
+          initialLikes={post.likes}
         />
 
-        <CommentSection />
+        <CommentSection postId={post._id} />
 
         <div className="mt-16 border-t pt-16">
           <h2 className="text-2xl font-bold mb-4">Enjoyed this post?</h2>

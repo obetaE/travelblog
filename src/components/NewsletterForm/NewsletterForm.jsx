@@ -26,7 +26,7 @@ const NewsletterForm = () => {
 
     try {
       // Replace with your actual API endpoint
-      const response = await fetch('https://your-api.com/subscribe', {
+      const response = await fetch('api/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

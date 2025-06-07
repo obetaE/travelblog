@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from 'react';
 import { FaHeart, FaRegComment } from 'react-icons/fa';
 import styles from "./styles/Manage.module.css";
@@ -27,8 +27,14 @@ const ManagePost = () => {
 
   const handleDelete = async (postId) => {
     try {
-      await fetch(`/api/blog/${postId}`, { method: 'DELETE' });
-      setPosts(posts.filter(post => post._id !== postId));
+      const res = await fetch(`/api/blog?id=${postId}`, { method: 'DELETE' });
+      
+      if(res.ok){
+        setPosts(posts.filter(post => post._id !== postId));
+      } else{
+        const errorData = await res.json();
+        console.error("Delete Failed: ", errorData.message)
+      }
     } catch (error) {
       console.error("Error deleting post:", error);
     }
@@ -80,50 +86,60 @@ const ManagePost = () => {
         <h1>Manage Posts</h1>
       </div>
 
-      <div className={styles.postsList}>
-        {posts.map(post => (
-          <div 
-            key={post._id} 
-            className={styles.postItem}
-            onClick={() => setSelectedPost(post)}
-            role="button"
-            tabIndex={0}
-          >
-            <div className={styles.stats}>
-              <div className={styles.metrics}>
-                <span aria-label="Likes"> <FaHeart className="text-red-500"/> {post.likes}</span>
-                <span aria-label="Comments"><FaRegComment className="text-gray-600" /> {post.comments.length}</span>
+      {posts.length === 0 ? (
+        <p className={styles.noResults}>No Posts Founds</p>
+      ) : (
+        <div className={styles.postsList}>
+          {posts.map((post) => (
+            <div
+              key={post._id}
+              className={styles.postItem}
+              onClick={() => setSelectedPost(post)}
+              role="button"
+              tabIndex={0}
+            >
+              <div className={styles.stats}>
+                <div className={styles.metrics}>
+                  <span aria-label="Likes">
+                    {" "}
+                    <FaHeart className="text-red-500" /> {post.likes}
+                  </span>
+                  <span aria-label="Comments">
+                    <FaRegComment className="text-gray-600" />{" "}
+                    {post.comments.length}
+                  </span>
+                </div>
+                <button
+                  className={styles.deleteBtn}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(post._id);
+                  }}
+                  aria-label="Delete post"
+                >
+                  Delete
+                </button>
               </div>
-              <button 
-                className={styles.deleteBtn}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDelete(post._id);
-                }}
-                aria-label="Delete post"
-              >
-                Delete
-              </button>
-            </div>
 
-            <div className={styles.postInfo}>
-              <h3>{post.title}</h3>
-              <span className={styles.date}>
-                {new Date(post.createdAt).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}
-              </span>
+              <div className={styles.postInfo}>
+                <h3>{post.title}</h3>
+                <span className={styles.date}>
+                  {new Date(post.createdAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {selectedPost && (
         <div className={styles.overlay}>
           <div className={styles.overlayContent}>
-            <button 
+            <button
               className={styles.closeBtn}
               onClick={() => setSelectedPost(null)}
               aria-label="Close overlay"
@@ -131,9 +147,7 @@ const ManagePost = () => {
               &times;
             </button>
             <h2>{selectedPost.title}</h2>
-            <p className={styles.postDescription}>
-              {selectedPost.desc}
-            </p>
+            <p className={styles.postDescription}>{selectedPost.desc}</p>
           </div>
         </div>
       )}

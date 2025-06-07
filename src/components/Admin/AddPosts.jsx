@@ -1,84 +1,163 @@
-"use client"
-import { useState, useRef } from 'react'; 
-import styles from './styles/AddPosts.module.css';
-import axios from 'axios';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import styles from "./styles/AddPosts.module.css";
+import axios from "axios";
+import "quill/dist/quill.snow.css";
 
 const AddPosts = () => {
+  const editorRef = useRef(null);
+  const quillInstanceRef = useRef(null);
+  const [desc, setDesc] = useState("");
   const [formData, setFormData] = useState({
-    title: '',
-    desc: '',
-    category: 'Adventure',
-    readTime: ''
+    title: "",
+    category: "Adventure",
+    readTime: "",
   });
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null); // New state for preview
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const fileInput = useRef(); // Added ref
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [showPreview, setShowPreview] = useState(false); // Preview modal state
+  const fileInput = useRef();
 
-  const categories = ['Adventure', 'Culture', 'Food', 'Sustainable Travel'];
+  const categories = ["Adventure", "Culture", "Food", "Sustainable Travel"];
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const Quill = require("quill").default;
+
+      const Font = Quill.import("formats/size");
+      Font.whitelist = ["small", "normal", "large", "huge"];
+      Quill.register(Font, true);
+
+      const quillInstance = new Quill(editorRef.current, {
+        theme: "snow",
+        modules: {
+          toolbar: [
+            [{ size: ["small", false, "large", "huge"] }],
+            ["bold", "italic", "underline"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            ["clean"],
+          ],
+        },
+      });
+
+      quillInstanceRef.current = quillInstance;
+      quillInstance.on("text-change", () => {
+        setDesc(quillInstance.root.innerHTML);
+      });
+    }
+  }, []);
+
+  // Handle file selection and create preview URL
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
+
+    setFile(selectedFile);
+
+    // Create preview URL
+    const url = URL.createObjectURL(selectedFile);
+    setPreviewUrl(url);
+  };
+
+  // Clear preview URL when component unmounts
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
+
+  const clearEditor = () => {
+    if (quillInstanceRef.current) {
+      const quill = quillInstanceRef.current;
+      quill.setContents([]);
+      setDesc("");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     try {
-      // Validate required fields FIRST
-      if (!formData.title || !formData.desc || !file || !formData.readTime) {
-        setError('All fields are required');
+      if (!formData.title.trim()) {
+        setError("Title is required");
         setLoading(false);
         return;
       }
 
-      // 1. Upload to Cloudinary FIRST
+      if (!desc || desc === "<p><br></p>") {
+        setError("Description is required");
+        setLoading(false);
+        return;
+      }
+
+      if (!file) {
+        setError("Image is required");
+        setLoading(false);
+        return;
+      }
+
+      if (!formData.readTime.trim()) {
+        setError("Read time is required");
+        setLoading(false);
+        return;
+      }
+
       const cloudinaryData = new FormData();
       cloudinaryData.append("file", file);
       cloudinaryData.append("upload_preset", "uploads");
 
-const uploadRes = await axios.post(
-  "https://api.cloudinary.com/v1_1/divixqupd/image/upload",
-  cloudinaryData
-).catch((err) => {
-  console.log("CLOUDINARY ERROR DETAILS:", err.response?.data);
-  throw err; // Rethrow to trigger catch block
-});
+      const uploadRes = await axios.post(
+        "https://api.cloudinary.com/v1_1/divixqupd/image/upload",
+        cloudinaryData
+      );
 
-      // 2. Create post data WITH image URL
       const postData = {
         ...formData,
-        image: uploadRes.data.secure_url
+        desc,
+        image: uploadRes.data.secure_url,
       };
 
-      // 3. Send to backend
-      const response = await fetch('/api/blog', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/blog", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(postData),
       });
 
-      if (!response.ok) throw new 
-      Error('Failed to create post');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to create post");
+      }
 
-      // Reset form PROPERLY
-      setFormData({ title: '', desc: '', category: 'Adventure', readTime: '' });
+      setFormData({
+        title: "",
+        category: "Adventure",
+        readTime: "",
+      });
+      clearEditor();
       setFile(null);
-      fileInput.current.value = ''; // Clear file input
-      setSuccess('Post created successfully!');
-
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      setPreviewUrl(null);
+      if (fileInput.current) fileInput.current.value = "";
+      setSuccess("Post created successfully!");
     } catch (err) {
-      setError(err.response?.data?.message || err.message);
+      setError(err.message || "An error occurred");
     } finally {
       setLoading(false);
     }
   };
 
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -88,8 +167,6 @@ const uploadRes = await axios.post(
         <h1 className={styles.adminTitle}>Create New Post</h1>
 
         <form onSubmit={handleSubmit} className={styles.adminForm}>
-         
-
           <div className={styles.formGroup}>
             <label>Title</label>
             <input
@@ -103,13 +180,14 @@ const uploadRes = await axios.post(
 
           <div className={styles.formGroup}>
             <label>Description</label>
-            <textarea
-              name="desc"
-              value={formData.desc}
-              onChange={handleChange}
-              required
-              rows="5"
-            />
+            <div ref={editorRef} className={styles.editorContainer} />
+            <button
+              type="button"
+              className={styles.button}
+              onClick={clearEditor}
+            >
+              Clear Editor
+            </button>
           </div>
 
           <div className={styles.formGroup}>
@@ -119,7 +197,7 @@ const uploadRes = await axios.post(
               value={formData.category}
               onChange={handleChange}
             >
-              {categories.map(category => (
+              {categories.map((category) => (
                 <option key={category} value={category}>
                   {category}
                 </option>
@@ -128,14 +206,24 @@ const uploadRes = await axios.post(
           </div>
 
           <div className={styles.formGroup}>
-            <label>Image URL</label>
+            <label>Image</label>
             <input
               type="file"
               name="image"
-              ref={fileInput} // Use the ref
-              onChange={(e) => setFile(e.target.files[0])}
+              ref={fileInput}
+              onChange={handleFileChange} // Updated handler
               required
+              accept="image/*"
             />
+            {previewUrl && (
+              <button
+                type="button"
+                className={styles.previewButton}
+                onClick={() => setShowPreview(true)}
+              >
+                Preview Image
+              </button>
+            )}
           </div>
 
           <div className={styles.formGroup}>
@@ -155,13 +243,64 @@ const uploadRes = await axios.post(
             className={styles.submitButton}
             disabled={loading}
           >
-            {loading ? 'Creating...' : 'Create Post'}
+            {loading ? "Creating..." : "Create Post"}
           </button>
         </form>
-         {error && <p className={styles.errorMessage}>{error}</p>}
-          {success && <p className={styles.successMessage}>{success}</p>}
 
+        {error && <p className={styles.errorMessage}>{error}</p>}
+        {success && <p className={styles.successMessage}>{success}</p>}
       </div>
+
+      {/* Preview Modal */}
+      {showPreview && previewUrl && (
+        <div className={styles.previewModal}>
+          <div className={styles.previewContent}>
+            <div className={styles.previewHeader}>
+              <h2>Image Preview</h2>
+              <button
+                className={styles.closeButton}
+                onClick={() => setShowPreview(false)}
+              >
+                &times;
+              </button>
+            </div>
+            
+            <div className={styles.previewCard}>
+              <div className={styles.imageContainer}>
+                <img 
+                  src={previewUrl} 
+                  alt="Preview" 
+                  className={styles.previewImage}
+                />
+                <div className={styles.imageOverlay} />
+              </div>
+              
+              <div className={styles.previewDetails}>
+                <div className={styles.previewMeta}>
+                  <span className={styles.previewDate}>
+                    {new Date().toLocaleDateString()}
+                  </span>
+                  <span className={styles.previewReadTime}>
+                    {formData.readTime || "Preview read time"}
+                  </span>
+                </div>
+                
+                <h3 className={styles.previewTitle}>
+                  {formData.title || "Your post title will appear here"}
+                </h3>
+                
+                <div className={styles.previewCategory}>
+                  {formData.category || "Category"}
+                </div>
+              </div>
+            </div>
+            
+            <p className={styles.previewNote}>
+              This is how your post will appear on the blog page
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
