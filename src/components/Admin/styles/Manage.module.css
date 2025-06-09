@@ -62,6 +62,7 @@
   font-size: 0.9rem;
 }
 
+
 .deleteBtn {
   background-color: var(--btn);
   color: white;
@@ -87,9 +88,13 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  max-height: 100vh;
+  overflow: hidden;
 }
 
 .overlayContent {
+  height: 90vh;
+  overflow-y: hidden;
   background-color: white;
   padding: 2rem;
   border-radius: 8px;

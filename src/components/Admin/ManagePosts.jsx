@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { FaHeart, FaRegComment } from 'react-icons/fa';
 import styles from "./styles/Manage.module.css";
+import 'react-quill/dist/quill.snow.css';
+
 
 const ManagePost = () => {
   const [selectedPost, setSelectedPost] = useState(null);
@@ -91,13 +93,7 @@ const ManagePost = () => {
       ) : (
         <div className={styles.postsList}>
           {posts.map((post) => (
-            <div
-              key={post._id}
-              className={styles.postItem}
-              onClick={() => setSelectedPost(post)}
-              role="button"
-              tabIndex={0}
-            >
+            <div key={post._id} className={styles.postItem}>
               <div className={styles.stats}>
                 <div className={styles.metrics}>
                   <span aria-label="Likes">
@@ -123,13 +119,23 @@ const ManagePost = () => {
 
               <div className={styles.postInfo}>
                 <h3>{post.title}</h3>
-                <span className={styles.date}>
-                  {new Date(post.createdAt).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </span>
+                <div className="flex justify-between">
+                  <span className={styles.date}>
+                    {new Date(post.createdAt).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </span>
+                  <button
+                    onClick={() => setSelectedPost(post)}
+                    className={styles.view}
+                    tabIndex={0}
+                  >
+                    {" "}
+                    View Details
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -147,7 +153,11 @@ const ManagePost = () => {
               &times;
             </button>
             <h2>{selectedPost.title}</h2>
-            <p className={styles.postDescription}>{selectedPost.desc}</p>
+            {/* <p className={styles.postDescription}>{selectedPost.desc}</p> */}
+            <article
+              className={`${styles.postDescription} ql-editor`}
+                dangerouslySetInnerHTML={{ __html: selectedPost.desc }}
+            />
           </div>
         </div>
       )}

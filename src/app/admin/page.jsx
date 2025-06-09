@@ -16,7 +16,7 @@ const AdminPanel = () => {
 
   const { data: session, status } = useSession();
 
- useEffect(() => {
+  useEffect(() => {
     // Check authentication and admin status
     if (status === "loading") return; // Session is still loading
 
@@ -48,7 +48,7 @@ const AdminPanel = () => {
     // Already handled by useEffect, but return null while redirecting
     return null;
   }
-    
+  
 
   return (
     <div className={styles.container}>

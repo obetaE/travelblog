@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 export const authOptions = {
   providers: [
     CredentialsProvider({
-      name: "credentials", // Corrected from "fullname" to "name"
+      name: "credentials",
       credentials: {},
 
       async authorize(credentials) {
@@ -17,16 +17,25 @@ export const authOptions = {
           const user = await UserModel.findOne({ email });
 
           if (!user) {
+            // console.log("❌ User not found for email:", email);
             return null;
           }
 
           const passwordMatch = await bcrypt.compare(password, user.password);
 
           if (!passwordMatch) {
+            // console.log("❌ Password mismatch for user:", user.email);
             return null;
           }
 
-          // Return only necessary user data (without password)
+          {/*// Log retrieved user data from MongoDB
+          console.log("✅ User authenticated successfully:", {
+            id: user._id.toString(),
+            email: user.email,
+            fullname: user.fullname,
+            isAdmin: user.isAdmin,
+          });*/}
+
           return {
             id: user._id.toString(),
             email: user.email,
@@ -34,7 +43,7 @@ export const authOptions = {
             isAdmin: user.isAdmin,
           };
         } catch (error) {
-          console.log("Error: ", error);
+          console.log("🔴 Authorization error:", error);
           return null;
         }
       },
@@ -42,20 +51,46 @@ export const authOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      // Add user data to token on initial sign in
+      {/*// Log before adding user data
+      console.log("JWT callback - initial token:", token);
+      console.log("JWT callback - user data:", user);*/}
+
       if (user) {
+        // Add user data to token
         token.id = user.id;
         token.fullname = user.fullname;
         token.isAdmin = user.isAdmin;
+        
+       {/* // Log updated token
+        console.log("🪙 Updated JWT token:", {
+          id: token.id,
+          email: token.email,
+          fullname: token.fullname,
+          isAdmin: token.isAdmin
+        });*/}
       }
       return token;
     },
     async session({ session, token }) {
-      // Add user data to session
+      {/*// Log before adding token data
+      console.log("Session callback - initial session:", session);
+      console.log("Session callback - token data:", token);*/}
+
       if (token) {
+        // Add user data to session
         session.user.id = token.id;
         session.user.fullname = token.fullname;
         session.user.isAdmin = token.isAdmin;
+        
+        {/*// Log updated session
+        console.log("🔐 Updated session data:", {
+          user: {
+            id: session.user.id,
+            name: session.user.name,
+            email: session.user.email,
+            isAdmin: session.user.isAdmin
+          }
+        });*/}
       }
       return session;
     },
